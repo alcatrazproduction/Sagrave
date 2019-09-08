@@ -86,7 +86,6 @@ class decPdf:
 			print( e )
 		try:
 			pdf.set_x(hmarg)
-			print("Doing the Total")
 			pdf.set_font('Arial', 'B', 8)
 			pdf.cell(cell['A'], hc*2, "Total :" )		
 			pdf.cell(cell['B'],hc*2,  '%9.2f'%total, 0, 0, 'R')
