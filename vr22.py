@@ -127,7 +127,7 @@ class gestion:
 		dispatch.setAbout( self.about )
 		
 
-		win.actionOuvrir.triggered.connect( lambda checked:  self.app.import_file( win ))
+		win.actionOuvrir.triggered.connect( lambda checked:  self.app.import_file( win, self ))
 		win.actionQuitter.triggered.connect( win.close)
 		win.actionApropos.triggered.connect( dispatch.doAbout )
 		win.actionSetting.triggered.connect( dispatch.doPreferences )

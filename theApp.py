@@ -33,7 +33,7 @@ class theApp( QApplication ):
 #																																	#
 ####################################################################################################
 
-	def import_file( self, win ):
+	def import_file( self, win,  Gest ):
 		theFName, selectedFilter = QtWidgets.QFileDialog.getOpenFileName(
 			win,
 			"",
@@ -41,6 +41,7 @@ class theApp( QApplication ):
 			win.tr("*.rtx"),
 			None)
 
+		WA			= str( Gest.thePref.elems[ 0 ]['WANumber'] )
 		loop			= 4
 		WANum		= 0
 		STNum		= 0
@@ -87,57 +88,59 @@ class theApp( QApplication ):
 				Montant	= int( theLine[96:102] ) / 100
 				CodeFin	= theLine[102:104]
 				
-				param = (
-					theLine, 
-					WANum, 
-					STNum, 
-					RArt, 
-					TNum, 
-					Year+"/" +
-					Mounth+"/"+
-					Day, 
-					Hours+":"+
-					Minutes, 
-					BArt, 
-					CNum, 
-					IDNum, 
-					GeBet, 
-					TermID, 
-					KM, 
-					Noten, 
-					Saule, 
-					Carbu, 
-					Prix, 
-					str(Litres)	, 
-					str(Montant), 
-					CodeFin, 
-					)
-					
-				try:
-					sql = """INSERT INTO t_tankdaten VALUE(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-					cur.execute(sql,  param)
-					self.conn.commit()
-				except :
-					self.conn.rollback()
-				try:
-					sql = """INSERT INTO t_cards VALUE(%s,%s,%s,%s,%s,%s)"""
-					cur.execute(sql,  (CNum, '', '', '', '', 'Non definie'))
-					self.conn.commit()
-				except :
-					self.conn.rollback()
-					
-				if( CNum in Totaux):
-					Totaux[CNum] ["total"]+= Litres
-					Totaux[CNum] [Day+ "/" + Mounth+ "/" +Year+" "+  
-						Hours+":"+Minutes]= Litres
+				if WANum == WA:
+					param = (
+						theLine, 
+						WANum, 
+						STNum, 
+						RArt, 
+						TNum, 
+						Year+"/" +
+						Mounth+"/"+
+						Day, 
+						Hours+":"+
+						Minutes, 
+						BArt, 
+						CNum, 
+						IDNum, 
+						GeBet, 
+						TermID, 
+						KM, 
+						Noten, 
+						Saule, 
+						Carbu, 
+						Prix, 
+						str(Litres)	, 
+						str(Montant), 
+						CodeFin, 
+						)
+						
+					try:
+						sql = """INSERT INTO t_tankdaten VALUE(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+						cur.execute(sql,  param)
+						self.conn.commit()
+					except :
+						self.conn.rollback()
+					try:
+						sql = """INSERT INTO t_cards VALUE(%s,%s,%s,%s,%s,%s)"""
+						cur.execute(sql,  (CNum, '', '', '', '', 'Non definie'))
+						self.conn.commit()
+					except :
+						self.conn.rollback()
+						
+					if( CNum in Totaux):
+						Totaux[CNum] ["total"]+= Litres
+						Totaux[CNum] [Day+ "/" + Mounth+ "/" +Year+" "+  
+							Hours+":"+Minutes]= Litres
 
+					else:
+						Totaux[CNum] = {}
+						Totaux[CNum] ["total"]= Litres
+						Totaux[CNum] [Day+ "/" + Mounth+ "/" +Year+" "+  
+							Hours+":"+Minutes]= Litres
+						
 				else:
-					Totaux[CNum] = {}
-					Totaux[CNum] ["total"]= Litres
-					Totaux[CNum] [Day+ "/" + Mounth+ "/" +Year+" "+  
-						Hours+":"+Minutes]= Litres
-					
-				
+					print( "BAD Automate Number MUST %8s was %8s"%(WA, WANum ) )
 				#loop -= 1
 			elif(RECType == "29"):
 				print( "End")
