@@ -23,11 +23,11 @@ class settings:
 
 	def actionSave(self):
 		pt = self.dlg.pref_table
-		self.elems[ self.dlg.menu.currentItem()-1 ]
-		for i in range(0, len( self.elems[ self.dlg.menu.currentItem()-1 ]) ):
+		self.elems[ self.last -1 ]
+		for i in range(0, len( self.elems[ self.last -1 ]) ):
 			e = pt.item(i, 0).text()
-			self.elems[ self.dlg.menu.currentItem()-1 ][ e ] = pt.item(i, 1).text()
-		self.elems[0] = self.elems[ self.dlg.menu.currentItem()-1 ]
+			self.elems[ self.last -1 ][ e ] = pt.item(i, 1).text()
+		self.elems[0] = self.elems[ self.last -1 ]
 		self.writeFile()
 	
 	def actionCombo( self, item ):
