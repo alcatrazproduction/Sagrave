@@ -1,4 +1,4 @@
-from PyQt5				import QtWidgets,QtCore, uic
+from PyQt5				import QtWidgets,QtCore,   uic
 from PyQt5.QtWidgets 	import QApplication,  QTableWidgetItem, QTreeWidgetItem
 import pymysql
 
@@ -13,9 +13,8 @@ class t_cards:
 #	code		VARCHAR(10)
 #	remarque	TEXT
 
-	def __init__(self,  theWin, theConn, theApp):
-		self.win 		= theWin
-		self.conn	= theConn
+	def __init__(self,  theWin, theApp):
+		self.win 	= theWin
 		self.app		= theApp
 		
 	def loadCards(self):
@@ -24,7 +23,7 @@ class t_cards:
 		win.v_cards.setColumnCount(5)
 		win.v_cards.setHorizontalHeaderLabels(("Numero", "Nom", "Véhicule", "Numéro Plaque", "Remarque"))
 		try:
-			cur = self.conn.cursor()
+			cur = self.app.conn.cursor()
 			cur. execute(sql)
 			records = cur.fetchall()
 			win.v_cards.setRowCount( len( records ))
@@ -33,11 +32,20 @@ class t_cards:
 			for row in records:
 				id	= QTableWidgetItem( "%5.0f"%row[0] )
 				id.setData(0x0100,  row[5])
+				id.setFlags( QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled )
 				win.v_cards.setItem(q, 0, id)
-				win.v_cards.setItem(q, 1,QTableWidgetItem( row[1] ))
-				win.v_cards.setItem(q, 2,QTableWidgetItem( str( row[2] )) )
-				win.v_cards.setItem(q, 3,QTableWidgetItem( str( row[3] )) )
-				win.v_cards.setItem(q, 4,QTableWidgetItem( str( row[4] )) )
+				i = QTableWidgetItem( row[1] )
+				i.setFlags( QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled )
+				win.v_cards.setItem(q, 1, i)
+				i = QTableWidgetItem( str( row[2] ))
+				i.setFlags( QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled )
+				win.v_cards.setItem(q, 2, i )
+				i = QTableWidgetItem( str( row[3] ))
+				i.setFlags( QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled )
+				win.v_cards.setItem(q, 3, i)
+				i = QTableWidgetItem( str( row[4] ))
+				i.setFlags( QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled )
+				win.v_cards.setItem(q, 4, i )
 				q +=1
 			cur.close()
 		except pymysql.Error as e:
@@ -45,14 +53,14 @@ class t_cards:
 
 	def editCards(self):
 		win 		= self.win
-		v_cards	=win.v_cards
+		v_cards	= win.v_cards
 		theRow	= v_cards.selectedItems()
 		sql	= 'SELECT floor (mid(id,7,12)),nom,vehicule,no_plaque,code,remarque,id FROM '+self.tbName+' WHERE id LIKE "'+theRow[0].data(0x0100)+'"'
 		dlg 	= uic.loadUi("modal_card.ui")
 		pt 	= dlg.form
 		card = -1
 		try:
-			cur = self.conn.cursor()
+			cur = self.app.conn.cursor()
 			cur. execute(sql)
 			records = cur.fetchall()
 			for row in records:
@@ -78,12 +86,12 @@ class t_cards:
 			theRow[3].setText( imma )
 			theRow[4].setText( remarque )
 			try:
-				cur 	= self.conn.cursor()
+				cur 	= self.app.conn.cursor()
 				sql	= "UPDATE %s SET nom='%s', vehicule='%s', no_plaque='%s', code='%s', remarque='%s' WHERE id LIKE '%s'"%(
 					self.tbName, nom, vehicule, imma, secret, remarque, card)
 				cur. execute(sql)
 				cur.close()
-				self.conn.commit()
+				self.app.conn.commit()
 			except pymysql.Error as e:
 				print( e )
 		

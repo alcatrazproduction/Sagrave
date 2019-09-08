@@ -18,3 +18,4 @@ try:
 	main.mainLoop()
 except Exception as inst:
 	print(inst)         
+	exit( -10000 )

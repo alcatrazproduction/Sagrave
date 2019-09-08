@@ -17,12 +17,12 @@ class dispatcher:
 #																																	#
 ####################################################################################################
 
-	def __init__(self, theWin, theApp, theConn):
-		self.win		= theWin
-		self.app		= theApp
-		self.conn	= theConn
-		self.Xcel		= decXel(theWin, theConn)
-		self.Pdf		= decPdf(theWin, theConn)
+	def __init__(self, theWin, theGest):
+		self.win			= theWin
+		self.app			= theGest.app
+		self.Main		= theGest
+		self.Xcel		= decXel(theWin, theGest.app)
+		self.Pdf			= decPdf(theWin, theGest.app)
 		
 ####################################################################################################
 #																																	#
@@ -122,3 +122,15 @@ class dispatcher:
 		win.t_decompte.setFixedWidth( size.width() - hsize )
 		win.t_decompte.setFixedHeight( size.height() - vsize)
 		
+####################################################################################################
+#																																	#
+#																																	#
+####################################################################################################
+
+	def doPreferences(self):
+		
+		ret =	self.Main.thePref.showDialog()
+		if ret == 1:
+			self.app.conn.close()
+			self.Main.initDatabase()
+			self.Main.initApplication()

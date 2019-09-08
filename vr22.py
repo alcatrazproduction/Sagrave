@@ -22,7 +22,8 @@ from dispatcher 			import dispatcher
 		
 class gestion:
 	def __init__(self):
-		self.app 		=	theApp([])
+		
+		self.app 		= theApp([])
 		self.thePref 	= settings( self.app )
 		self.about		= uic.loadUi("about.ui")
 		filename 		= r'logo.png'
@@ -33,6 +34,7 @@ class gestion:
 		sleep(2)
 		
 	def initDatabase(self):
+		
 		self.about.info.setText("Trying to connect to database")
 		thePref			= self.thePref
 		
@@ -110,14 +112,14 @@ class gestion:
 				print(e)
 				print(e.args[0])
 				exit( -20 )
-		self.conn	= conn
+		self.app.conn	= conn
 
 	def initApplication(self):
 		
 		global primaryScreen
 		
 		win 				= uic.loadUi("sagrave.ui")
-		dispatch			= dispatcher( win, self.app, self.conn)
+		dispatch			= dispatcher( win, self )
 		primaryScreen	= self.app.primaryScreen()
 		scrSize			= primaryScreen.size()
 		win.move( scrSize.width()/2 - win.width()/2, scrSize.height()/2 - win.width()/2 )
@@ -128,6 +130,7 @@ class gestion:
 		win.actionOuvrir.triggered.connect( lambda checked:  self.app.import_file( win ))
 		win.actionQuitter.triggered.connect( win.close)
 		win.actionApropos.triggered.connect( dispatch.doAbout )
+		win.actionSetting.triggered.connect( dispatch.doPreferences )
 		win.DExcel.clicked.connect(dispatch.createExcel)
 		win.DPdf.clicked.connect(dispatch.createPdf)
 		win.v_cards.doubleClicked.connect(dispatch.editKey)
@@ -163,7 +166,7 @@ class gestion:
 
 		self.about.info.setText("Loading Cards information...")
 
-		self.cards	=	t_cards(win, self.conn, self.app)
+		self.cards	=	t_cards(win, self.app)
 		dispatch.setCards( self.cards )
 		self.cards.loadCards()
 		self.app.setCard( self.cards )
@@ -183,5 +186,5 @@ class gestion:
 		ret = self.app.exec()
 		#SELECT decode_memopass( Carte,WA) AS card,Litres, calcul_total_card( Carte,'2019/07/01','2019/08/01') FROM sagrave_ouchy.t_tankdaten GROUP BY Carte  ORDER BY Carte;
 
-		self.conn.close()
+		self.app.conn.close()
 		exit( ret )

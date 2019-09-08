@@ -5,9 +5,9 @@ from PyQt5 					import QtWidgets
 
 
 class decPdf:
-	def __init__(self,  theWin, theConn):
+	def __init__(self,  theWin, theApp):
 		self.win 		= theWin
-		self.conn	= theConn
+		self.app			= theApp
 		
 	def showDecompte( self ):
 		theFName, selectedFilter = QtWidgets.QFileDialog.getSaveFileName(
@@ -17,7 +17,7 @@ class decPdf:
 			self.win.tr("*.pdf"),
 			None)
 			
-		conn 		= self.conn
+		conn 		= self.app.conn
 		pdf = FPDF()
 		pdf.add_page()
 		pdf.set_font('Arial', 'B', 8)

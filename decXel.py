@@ -5,9 +5,9 @@ from PyQt5 					import QtWidgets
 #from datetime import date
 
 class decXel:
-	def __init__(self,  theWin, theConn):
+	def __init__(self,  theWin, theApp):
 		self.win		= theWin
-		self.conn	= theConn
+		self.app		= theApp
 		
 	def showDecompte( self ):
 		theFName, selectedFilter = QtWidgets.QFileDialog.getSaveFileName(
@@ -17,7 +17,7 @@ class decXel:
 			self.win.tr("*.xlsx"),
 			None)
 			
-		conn 		= self.conn
+		conn 		= self.app.conn
 		wk 		= xlsxwriter.Workbook('test.xlsx')
 		wt 		= wk.add_worksheet()
 

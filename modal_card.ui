@@ -3,14 +3,14 @@
  <class>editCard</class>
  <widget class="QDialog" name="editCard">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::ApplicationModal</enum>
   </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>393</width>
-    <height>249</height>
+    <width>455</width>
+    <height>281</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,9 +25,9 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>220</y>
-     <width>381</width>
+     <x>10</x>
+     <y>250</y>
+     <width>441</width>
      <height>32</height>
     </rect>
    </property>
@@ -44,10 +44,10 @@
   <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>0</y>
-     <width>391</width>
-     <height>221</height>
+     <width>441</width>
+     <height>243</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="form">
@@ -141,6 +141,9 @@
         <width>0</width>
         <height>80</height>
        </size>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
     </item>

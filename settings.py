@@ -43,12 +43,11 @@ class settings:
 		
 		
 		pt.resizeColumnToContents(0)
-	#	pt.resizeColumnToContents(1)
 		self.dlg.buttonBox.accepted.connect(self.actionSave)
 
 		self.dlg.show()
+		self.dlg.setModal( True )
 		ret 	= self.dlg.exec()
-		#self.app.exec()
 		return ret
 		
 	def readFile(self):
