@@ -133,4 +133,6 @@ class dispatcher:
 		if ret == 1:
 			self.app.conn.close()
 			self.Main.initDatabase()
-			self.Main.initApplication()
+			self.cards.loadCards()
+			self.app.showTransaction(self.win)
+			self.app.showDecompte(self.win)
