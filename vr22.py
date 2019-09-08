@@ -1,28 +1,28 @@
 #!/usr/bin/env python3
-#####################################################################################################
-#	Main class ( gestion) for the app																																								#
-#	Was the first writing in no class, don the main loop and init all the stuff																													#
-#	Creator:		Yves Huguenin																																									#
-#	Date:			06.09.2019																																										#
-#	Version:		0.1																																													#
-#																																																		#
-######################################################################################################!/usr/bin/env python3
+#######################################################################################################
+#	Main class ( gestion) for the app																						#
+#	Was the first writing in no class, don the main loop and init all the stuff								#
+#	Creator:		Yves Huguenin																									#
+#	Date:			06.09.2019																										#
+#	Version:		0.1																												#
+#																																		#
+#######################################################################################################
 from PyQt5 					import	uic
 from PyQt5.QtGui			import	QImage ,  QPixmap
 from PyQt5.QtWidgets 	import 	QMessageBox
 
 import pymysql
 from datetime 				import	date
-from time						import	sleep
+from time					import	sleep
 
 from theApp					import	theApp
-from settings 					import	settings
-from t_cards 					import	t_cards
-from dispatcher 				import dispatcher
+from settings 				import	settings
+from t_cards 				import	t_cards
+from dispatcher 			import dispatcher
 		
 class gestion:
 	def __init__(self):
-		self.app 			=	theApp([])
+		self.app 		=	theApp([])
 		self.thePref 	= settings( self.app )
 		self.about		= uic.loadUi("about.ui")
 		filename 		= r'logo.png'
@@ -32,7 +32,7 @@ class gestion:
 		self.about.show()
 		sleep(2)
 		
-	def	initDatabase(self):
+	def initDatabase(self):
 		self.about.info.setText("Trying to connect to database")
 		thePref			= self.thePref
 		
@@ -112,11 +112,19 @@ class gestion:
 				exit( -20 )
 		self.conn	= conn
 
-	def	 initApplication(self):
-		win 		= uic.loadUi("sagrave.ui")
-		dispatch	= dispatcher( win, self.app, self.conn)
+	def initApplication(self):
+		
+		global primaryScreen
+		
+		win 				= uic.loadUi("sagrave.ui")
+		dispatch			= dispatcher( win, self.app, self.conn)
+		primaryScreen	= self.app.primaryScreen()
+		scrSize			= primaryScreen.size()
+		win.move( scrSize.width()/2 - win.width()/2, scrSize.height()/2 - win.width()/2 )
+		dispatch.resizeWindow()
 		dispatch.setAbout( self.about )
 		
+
 		win.actionOuvrir.triggered.connect( lambda checked:  self.app.import_file( win ))
 		win.actionQuitter.triggered.connect( win.close)
 		win.actionApropos.triggered.connect( dispatch.doAbout )

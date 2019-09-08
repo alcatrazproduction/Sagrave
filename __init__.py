@@ -10,10 +10,11 @@
 name = "Sagrave"
 
 from vr22		import gestion
+
 try:
 	main 	= gestion()
 	main.initDatabase()
 	main.initApplication()
 	main.mainLoop()
-except :
-	None
+except Exception as inst:
+	print(inst)         
