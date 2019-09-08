@@ -41,11 +41,11 @@ class gestion:
 		while 1:
 			try:
 				#conn = pymysql.connect(host='localhost', port=3306, user='sagrave', passwd='', db='sagrave_ouchy')
-				conn = pymysql.connect(	host		= thePref.elems['DBHost'], 
-													port		= int( thePref.elems['DBPort'] ), 
-													user		= thePref.elems['DBUser'], 
-													passwd	= thePref.elems['DBPass'], 
-													db			= thePref.elems['DBdb'])
+				conn = pymysql.connect(	host		= thePref.elems[0]['DBHost'], 
+													port		= int( thePref.elems[0]['DBPort'] ), 
+													user		= thePref.elems[0]['DBUser'], 
+													passwd	= thePref.elems[0]['DBPass'], 
+													db			= thePref.elems[0]['DBdb'])
 
 				cur = conn.cursor()
 				break
@@ -60,18 +60,18 @@ class gestion:
 					ret = msgBox.exec()
 					if ret == QMessageBox.Ok:
 						try:
-							conn = pymysql.connect(	host		= thePref.elems['DBHost'], 
-																port		= int( thePref.elems['DBPort'] ), 
-																user		= thePref.elems['DBUser'], 
-																passwd	= thePref.elems['DBPass'], 
+							conn = pymysql.connect(	host		= thePref.elems[0]['DBHost'], 
+																port		= int( thePref.elems[0]['DBPort'] ), 
+																user		= thePref.elems[0]['DBUser'], 
+																passwd	= thePref.elems[0]['DBPass'], 
 																)
 							cur = conn.cursor()
-							cur.execute("CREATE DATABASE IF NOT EXISTS '%s'"% ( thePref.elems['DBdb'] ))
+							cur.execute("CREATE DATABASE IF NOT EXISTS '%s'"% ( thePref.elems[0]['DBdb'] ))
 							cur.close()
 							conn.close()
 						except pymysql.Error as e1:
 							print(e1)
-							print("CREATE DATABASE IF NOT EXISTS %s"% ( thePref.elems['DBdb']+'test' ))
+							print("CREATE DATABASE IF NOT EXISTS %s"% ( thePref.elems[0]['DBdb'] ))
 							  
 					else :
 						  exit( -2 )
