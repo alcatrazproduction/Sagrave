@@ -34,13 +34,13 @@ class gestion:
 		
 	def initDatabase(self):
 		
+		self.about.info.close()
 		self.about.info.setText("Trying to connect to database")
-		self.about.update()
+		self.about.show()
 		thePref			= self.thePref
 		
 		while 1:
 			try:
-				#conn = pymysql.connect(host='localhost', port=3306, user='sagrave', passwd='', db='sagrave_ouchy')
 				conn = pymysql.connect(	host		= thePref.elems[0]['DBHost'], 
 													port		= int( thePref.elems[0]['DBPort'] ), 
 													user		= thePref.elems[0]['DBUser'], 
@@ -96,7 +96,7 @@ class gestion:
 				if ret == QMessageBox.Ok:
 					sql	= ''
 					try:
-						f = open('schemas.sql', 'r')
+						f = open( const.schemaFile , 'r')
 						for l in f :
 							sql 	= sql + ' ' + l
 							if l.find(';') >=0:
@@ -118,7 +118,7 @@ class gestion:
 		
 		global primaryScreen
 		
-		win 				= uic.loadUi(const.mainWindow)
+		win 				= uic.loadUi( const.mainWindow )
 		dispatch			= dispatcher( win, self )
 		primaryScreen	= self.app.primaryScreen()
 		scrSize			= primaryScreen.size()
@@ -185,7 +185,6 @@ class gestion:
 		self.about.info.setText("")
 		self.win.show()
 		ret = self.app.exec()
-		#SELECT decode_memopass( Carte,WA) AS card,Litres, calcul_total_card( Carte,'2019/07/01','2019/08/01') FROM sagrave_ouchy.t_tankdaten GROUP BY Carte  ORDER BY Carte;
 
 		self.app.conn.close()
 		exit( ret )

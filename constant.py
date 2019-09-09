@@ -8,11 +8,12 @@
 #																																		#
 #######################################################################################################
 class const:
+# Gui file name
 	guiFolder			= "gui/"
 	mainWindow		= "gui/sagrave.ui"
 	aboutWindow		= "gui/about.ui"
 	cardDialog			= "gui/modal_card.ui"
 	prefDialog			= "gui/modal_pref.ui"
 	logoFile				=  r'gui/logo.png'
-	
-	
+# SQL File name
+	schemaFile			= 'sql/schemas.sql'
