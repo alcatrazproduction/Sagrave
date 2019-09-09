@@ -15,3 +15,4 @@ class const:
 	prefDialog			= "gui/modal_pref.ui"
 	logoFile				=  r'gui/logo.png'
 	
+	
