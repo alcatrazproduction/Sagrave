@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project Sagrave -->
-<!-- Saved: 2019-09-09, 16:10:20 -->
+<!-- Saved: 2019-09-09, 16:36:50 -->
 <!-- Copyright (C) 2019 Yves Huguenin, yves.huguenin@tricala.org -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -25,10 +25,18 @@
     <Source>theApp.py</Source>
     <Source>vr22.py</Source>
   </Sources>
+  <Forms>
+    <Form>gui/about.ui</Form>
+    <Form>gui/modal_card.ui</Form>
+    <Form>gui/modal_pref.ui</Form>
+    <Form>gui/sagrave.ui</Form>
+  </Forms>
   <Others>
     <Other>.gitignore</Other>
     <Other>Doc</Other>
     <Other>Sagrave.api</Other>
+    <Other>gui/logo.png</Other>
+    <Other>sql</Other>
   </Others>
   <MainScript>__init__.py</MainScript>
   <Vcs>
