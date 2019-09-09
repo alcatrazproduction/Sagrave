@@ -1,8 +1,8 @@
-from PyQt5				import QtWidgets,QtCore,   uic
-from PyQt5.QtWidgets 	import QApplication,  QTableWidgetItem, QTreeWidgetItem
+from PyQt5					import 	QtCore,   uic
+from PyQt5.QtWidgets 	import   QTableWidgetItem
 import pymysql
 
-
+from constant 				import const
 
 class t_cards:
 	tbName	=	't_cards'
@@ -56,7 +56,7 @@ class t_cards:
 		v_cards	= win.v_cards
 		theRow	= v_cards.selectedItems()
 		sql	= 'SELECT floor (mid(id,7,12)),nom,vehicule,no_plaque,code,remarque,id FROM '+self.tbName+' WHERE id LIKE "'+theRow[0].data(0x0100)+'"'
-		dlg 	= uic.loadUi("modal_card.ui")
+		dlg 	= uic.loadUi( const.cardDialog )
 		pt 	= dlg.form
 		card = -1
 		try:

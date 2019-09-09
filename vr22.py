@@ -19,15 +19,14 @@ from theApp					import	theApp
 from settings 				import	settings
 from t_cards 				import	t_cards
 from dispatcher 			import dispatcher
-		
+from constant			import const		
 class gestion:
 	def __init__(self):
 		
-		self.app 		= theApp([])
+		self.app 			= theApp([])
 		self.thePref 	= settings( self.app )
-		self.about		= uic.loadUi("about.ui")
-		filename 		= r'logo.png'
-		logo 				= QImage(filename )
+		self.about		= uic.loadUi( const.aboutWindow)
+		logo 				= QImage( const.logoFile )
 		self.about.logo.setPixmap(QPixmap.fromImage(logo))
 		self.about.info.setText("Initialising Application")
 		self.about.show()
@@ -36,6 +35,7 @@ class gestion:
 	def initDatabase(self):
 		
 		self.about.info.setText("Trying to connect to database")
+		self.about.update()
 		thePref			= self.thePref
 		
 		while 1:
@@ -118,7 +118,7 @@ class gestion:
 		
 		global primaryScreen
 		
-		win 				= uic.loadUi("sagrave.ui")
+		win 				= uic.loadUi(const.mainWindow)
 		dispatch			= dispatcher( win, self )
 		primaryScreen	= self.app.primaryScreen()
 		scrSize			= primaryScreen.size()
@@ -174,6 +174,7 @@ class gestion:
 
 		self.app.showTransaction(win)
 		self.about.info.setText("Creating Report...")
+		self.about.update()
 		sleep(2)
 		self.app.showDecompte(win)
 		self.win			= win

@@ -1,8 +1,8 @@
-from PyQt5				import QtWidgets,QtCore, uic
-from PyQt5.QtWidgets 	import QApplication,  QTableWidgetItem, QTreeWidgetItem
+from PyQt5					import 	QtCore, uic
+from PyQt5.QtWidgets 	import   QTableWidgetItem
 import pickle
 
-
+from constant 				import const
 
 class settings:
 	elems = [{
@@ -60,7 +60,7 @@ class settings:
 				row +=1
 		
 	def showDialog(self):
-		self.dlg = uic.loadUi("modal_pref.ui")
+		self.dlg = uic.loadUi( const.prefDialog )
 		pt = self.dlg.pref_table
 		me	= self.dlg.menu
 		
