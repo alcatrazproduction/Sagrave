@@ -71,7 +71,7 @@ class decXel:
 				
 				hl = line
 				try: # DATE_FORMAT(BDate,'%d/%c/%Y'),DATE_FORMAT(BTime,'%k:%i')
-					sql = "SELECT BDate,BTime, Litres FROM t_tankdaten WHERE Carte LIKE '"+row[0]+"' AND BDate BETWEEN '"+deb+"' AND '"+fin+"' "
+					sql = "SELECT BDate,BTime, Litres FROM t_tankdaten WHERE Carte LIKE '"+row[0]+"' AND BDate BETWEEN '"+deb+"' AND '"+fin+"' ORDER BY M27 "
 					c1 = conn.cursor()
 					c1.execute(sql )
 					rec1 = c1.fetchall()

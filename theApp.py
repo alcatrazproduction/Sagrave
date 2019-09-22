@@ -197,7 +197,7 @@ class theApp( QApplication ):
 		fin		= win.DDFin.date().toString(Qt.ISODate)
 		
 		sql = "SELECT DISTINCT  Carte,CONCAT((SELECT nom FROM t_cards WHERE id LIKE Carte),' (',FLOOR(MID(Carte,7,12)),')') FROM t_tankdaten "
-		sql = sql + "WHERE BDate BETWEEN '"+deb+"' AND '"+fin+"' ORDER BY Carte"
+		sql = sql + "WHERE BDate BETWEEN '"+deb+"' AND '"+fin+"' ORDER BY Carte,M27"
 		
 		total 	= 0
 		font	= QFont( 'Courier', 10)
@@ -230,7 +230,7 @@ class theApp( QApplication ):
 					print( e )				
 					
 				try:
-					sql = "SELECT DATE_FORMAT(BDate,'%d/%c/%Y'),DATE_FORMAT(BTime,'%k:%i'), Litres FROM t_tankdaten WHERE Carte LIKE '"+row[0]+"' AND BDate BETWEEN '"+deb+"' AND '"+fin+"' "
+					sql = "SELECT DATE_FORMAT(BDate,'%d/%c/%Y'),DATE_FORMAT(BTime,'%k:%i'), Litres FROM t_tankdaten WHERE Carte LIKE '"+row[0]+"' AND BDate BETWEEN '"+deb+"' AND '"+fin+"' ORDER BY M27"
 					c1 = self.conn.cursor()
 					c1.execute(sql )
 					rec1 = c1.fetchall()
